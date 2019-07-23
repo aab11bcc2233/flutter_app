@@ -1,7 +1,12 @@
 import 'package:english_words/english_words.dart';
 import 'package:flutter/material.dart';
+//import 'package:flutter/rendering.dart';
+import './Tapbox.dart';
 
-void main() => runApp(MyApp());
+void main() {
+//  debugPaintSizeEnabled = true;
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -23,6 +28,8 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         "new_page": (context) => NewRouter(),
+        "counter_page": (context) => CounterRouterWidget(),
+        "tapbox_page": (context) => TapboxPage(),
       },
       home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -112,6 +119,15 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
             RandomWordsWidget(),
+            FlatButton(
+              child: Text("counter page"),
+              onPressed: () => Navigator.pushNamed(context, "counter_page"),
+            ),
+            FlatButton(
+              child: Text("tapbox page"),
+              onPressed: () => Navigator.pushNamed(context, "tapbox_page"),
+            ),
+
           ],
         ),
       ),
@@ -137,6 +153,7 @@ class NewRouter extends StatelessWidget {
 }
 
 class RandomWordsWidget extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final wordPair = WordPair.random();
@@ -144,5 +161,87 @@ class RandomWordsWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Text(wordPair.toString()),
     );
+  }
+}
+
+class CounterRouterWidget extends StatelessWidget {
+  static const String _TAG = "CounterRouterWidget: ";
+
+  @override
+  Widget build(BuildContext context) {
+    print(_TAG + "build()");
+//    return CounterWidget();
+  return Text("xxx");
+  }
+}
+
+class CounterWidget extends StatefulWidget {
+  static const String _TAG = "CounterWidget: ";
+
+  CounterWidget({Key key, this.initValue: 0}) {
+    print(_TAG + "CounterWidget()");
+  }
+
+  final int initValue;
+
+  @override
+  State createState() {
+    print(_TAG + "createState()");
+    return _CounterWidgetState();
+  }
+}
+
+class _CounterWidgetState extends State<CounterWidget> {
+  static const String _TAG = "_CounterWidgetState: ";
+
+  int _counter;
+
+  @override
+  void initState() {
+    super.initState();
+    _counter = widget.initValue;
+    print(_TAG + "initState()");
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print(_TAG + "build()");
+    return Scaffold(
+      body: Center(
+        child: FlatButton(
+            onPressed: () => setState(() => _counter += 1),
+            child: Text("$_counter")),
+      ),
+    );
+  }
+
+  @override
+  void didUpdateWidget(CounterWidget oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print(_TAG + "didUpdateWidget()");
+  }
+
+  @override
+  void deactivate() {
+    super.deactivate();
+    print(_TAG + "deactivate()");
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    print(_TAG + "dispose()");
+  }
+
+  @override
+  void reassemble() {
+    super.reassemble();
+    print(_TAG + "reassemble()");
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    print(_TAG + "didChangeDependencies()");
   }
 }
